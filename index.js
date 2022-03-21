@@ -57,7 +57,7 @@ button.onclick = function() {
 
 var unButton = document.getElementById("unlimited");
 unButton.onclick = function() {
-  let unList = JSON.parse(require("./wordlistunlimited.json"));
+  //let unList = JSON.parse(require("./wordlistunlimited.json"));
 }
 
 function sort(word, result){
