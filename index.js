@@ -60,6 +60,7 @@ button.onclick = function() {
 var unButton = document.getElementById("unlimited");
 unButton.onclick = function() {
   if(document.getElementById("unlength").value.length != 0){
+    document.getElementById("p1").innerHTML = "trying unlimited...";
     wordLength = document.getElementById("unlength").value;
     let unList = require("./wordlistunlimited.json");
     unList = JSON.parse(unList);
