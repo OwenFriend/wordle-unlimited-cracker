@@ -19,6 +19,8 @@ var grnpos = new Array();
 
 var extraDebug = false;
 
+var wordLength = 5;
+
 var button = document.querySelector('button');
 button.onclick = function() {
   if(document.getElementById("wordInput").value.length == 5 && document.getElementById("resultInput").value.length == 5){
@@ -57,7 +59,22 @@ button.onclick = function() {
 
 var unButton = document.getElementById("unlimited");
 unButton.onclick = function() {
-  //let unList = JSON.parse(require("./wordlistunlimited.json"));
+  if(document.getElementById("unlength").value.length != 0){
+    wordLength = document.getElementById("unlength").value;
+    let unList = require("./wordlistunlimited.json");
+    unList = JSON.parse(unList);
+    console.log("filter");
+    unList = unList.filter(filterByLength);
+    console.log("filtered to: " + wordLength);
+    document.getElementById("p1").innerHTML = "unlimited";
+  }
+}
+
+function filterByLength(word){
+  if(word.length != wordLength){
+    return false;
+  }
+  return true;
 }
 
 function sort(word, result){
