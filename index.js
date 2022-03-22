@@ -21,16 +21,7 @@ var extraDebug = false;
 
 var wordLength = 5;
 
-var button = document.querySelector('button');
-button.onclick = function() {
-  if(document.getElementById("wordInput").value.length == 5 && document.getElementById("resultInput").value.length == 5){
-    sort(document.getElementById("wordInput").value, document.getElementById("resultInput").value);
-    console.log("word list length: " + wordList.length);
-    if(wordList.length < 50){
-      extraDebug = true;
-    }
-    wordList = wordList.filter(cleanList);
-
+function solveWord() {
     lValues = new Array();
     wValues = new Array();
     letters.forEach(addEmptyL);
@@ -53,22 +44,55 @@ button.onclick = function() {
         bestWords.push(wordList[i]);
       }
     }
+    return bestWords;
+}
+
+var button = document.querySelector('button');
+button.onclick = function() {
+  if(document.getElementById("wordInput").value.length == 5 && document.getElementById("resultInput").value.length == 5){
+    sort(document.getElementById("wordInput").value, document.getElementById("resultInput").value);
+    console.log("word list length: " + wordList.length);
+    if(wordList.length < 50){
+      extraDebug = true;
+    }
+    wordList = wordList.filter(cleanList);
+
+    
     document.getElementById("p1").innerHTML = bestWords;
   }
 }
 
+var firstButton = document.getElementById("first");
+firstButton.onclick = function() {
+  document.getElementById("p1").innerHTML = solveWord();
+}
+
+var normButton = document.getElementById("normal");
+normButton.onclick = function() {
+  wordList = require("./wordlist.js");
+  letters = Array.from("abcdefghijklmnopqrstuvwxyz");
+  grays = new Array();
+  yellows = new Array();
+  yelpos = new Array(); 
+  greens = new Array();
+  grnpos = new Array();
+}
+
 var unButton = document.getElementById("unlimited");
 unButton.onclick = function() {
-  if(document.getElementById("unlength").value.length != 0){
-    document.getElementById("p1").innerHTML = "trying unlimited...";
-    wordLength = document.getElementById("unlength").value;
-    let unList = require("./wordlistunlimited.json");
-    unList = JSON.parse(unList);
-    console.log("filter");
-    unList = unList.filter(filterByLength);
-    console.log("filtered to: " + wordLength);
-    document.getElementById("p1").innerHTML = "unlimited";
-  }
+  letters = Array.from("abcdefghijklmnopqrstuvwxyz");
+  grays = new Array();
+  yellows = new Array();
+  yelpos = new Array(); 
+  greens = new Array();
+  grnpos = new Array();
+  document.getElementById("p1").innerHTML = "trying unlimited...";
+  wordLength = document.getElementById("unlength").value;
+  let unList = require("./unlimitedwordlist.js");
+  console.log("filter");
+  wordList = unList.filter(filterByLength);
+  console.log("filtered to: " + wordLength);
+  document.getElementById("p1").innerHTML = "unlimited";
 }
 
 function filterByLength(word){
