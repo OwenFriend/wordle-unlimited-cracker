@@ -58,7 +58,7 @@ button.onclick = function() {
     wordList = wordList.filter(cleanList);
 
     
-    document.getElementById("p1").innerHTML = bestWords;
+    document.getElementById("p1").innerHTML = solveWord();
   }
 }
 
