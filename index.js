@@ -59,6 +59,7 @@ button.onclick = function() {
 
     
     document.getElementById("p1").innerHTML = solveWord();
+    document.getElementById("wordInput").value = solveWord();
   }
 }
 
