@@ -149,8 +149,10 @@ function sort(word, result){
   }
   console.log(grays);
   console.log(yellows);
-  console.log(yelpos[0]);
-  console.log(yelpos[1]);
+  for(var i = 0; i < yelpos.length; i++){
+    console.log(yelpos[i]);
+  }
+  //console.log(yelpos);
   console.log(greens);
   console.log(letters);
 }
@@ -159,20 +161,14 @@ function cleanList(word){
   //Grays
   for(var i = 0; i < grays.length; i++){
     if(word.includes(grays[i])){
-      if(extraDebug == true){
-        debug(word, "contained grays");
-      }
-
+      debug(word, "contained grays");
       return false;
     }
   }
   //Greens
   for(var i = 0; i < greens.length; i++){
     if(Array.from(word)[grnpos[i]] != greens[i]){
-      if(extraDebug == true){
-        debug(word, "didnt contain green in correct spot");
-      }
-
+      debug(word, "didnt contain green in correct spot");
       return false;
     }
   }
@@ -181,21 +177,17 @@ function cleanList(word){
   for(var i = 0; i < yellows.length; i++){
     //console.log("y");
     if(word.includes(yellows[i])){
+      debugX(word, "contains yellow");
       for(var i1 = 0; i1 < yelpos[i].length; i1++){
-        if(Array.from(word)[(yelpos[i])] == yellows[i] ){
-          if(extraDebug == true){
-            debug(word, "yellow was in wrong spot");
-          }
-
+        if(Array.from(word)[(yelpos[i][i1])] == yellows[i] ){
+          debug(word, "contained yellow: " + yellows[i] + " in spot" + (yelpos[i][i1] + 1));
           return false;
         }
       }
+      debugX(word, "did not contain yellow: " + yellows[i] + " in spots: " + yelpos[i]);
     }
     else if(yellows.length > 0){
-      if(extraDebug == true){
       debug(word, "didnt contain yellow");
-        
-      }
       return false;
     }
   }
@@ -228,8 +220,16 @@ function addEmptyW(){
   wValues.push(0);
 }
 
+function debugX(word, message){
+  if(extraDebug == true){
+    console.log(word + " " + message);
+  }
+}
+
 function debug(word, reason){
-  console.log("removed word: " + word + ", reason: " + reason);
+  if(extraDebug == true){
+    console.log("removed word: " + word + ", reason: " + reason);
+  }
 }
 
 //usage:
