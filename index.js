@@ -21,6 +21,8 @@ var extraDebug = false;
 
 var wordLength = 5;
 
+//FInd the average amount of guesses to get a certain right answer for each word
+
 function solveWord() {
     lValues = new Array();
     wValues = new Array();
