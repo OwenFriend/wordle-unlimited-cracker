@@ -36,11 +36,11 @@ function solveWord(list) {
     wValues = new Array();
     letters.forEach(addEmptyL);
     list.forEach(LetterValues);
-    console.log(lValues);
+    //console.log(lValues);
     list.forEach(addEmptyW);
-    console.log(wValues);
+    //console.log(wValues);
     list.forEach(WordValues);
-    console.log(wValues);
+    //console.log(wValues);
 
     var largest = 0;
     var bestWords = new Array();
@@ -63,7 +63,7 @@ button.onclick = function() {
     sort(document.getElementById("wordInput").value, document.getElementById("resultInput").value, grays, yellows, yelpos, greens, grnpos, letters);
     console.log("word list length: " + wordList.length);
     if(wordList.length < 50){
-      extraDebug = true;
+      //extraDebug = true;
     }
     wordList = wordList.filter(cleanList);
 
@@ -178,7 +178,6 @@ function filterByLength(word){
 function sort(word, result, grays1, yellows1, yelpos1, greens1, grnpos1, letters1){
   var res = Array.from(result);
   var wrd = Array.from(word);
-  console.log(letters1);
   for(var i = 0; i < 5; i++){
     //Grays
     if(res[i] == "x"){
@@ -220,14 +219,7 @@ function sort(word, result, grays1, yellows1, yelpos1, greens1, grnpos1, letters
       }
     }
   }
-  console.log(grays1);
-  console.log(yellows1);
-  for(var i = 0; i < yelpos1.length; i++){
-    console.log(yelpos1[i]);
-  }
   //console.log(yelpos);
-  console.log(greens1);
-  console.log(letters1);
 }
 
 function cleanList(word){
