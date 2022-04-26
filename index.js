@@ -10,12 +10,20 @@ appDiv.innerHTML = `<h1>JS Starter</h1>`;
 var lValues = new Array();
 var wValues = new Array();
 
-var letters1 = Array.from("abcdefghijklmnopqrstuvwxyz");
-var grays1 = new Array();
-var yellows1 = new Array();
-var yelpos1 = new Array();
-var greens1 = new Array();
-var grnpos1 = new Array();
+var letters = Array.from("abcdefghijklmnopqrstuvwxyz");
+var grays = new Array();
+var yellows = new Array();
+var yelpos = new Array();
+var greens = new Array();
+var grnpos = new Array();
+
+var wordList1 = wordList;
+var letters2 = letters;
+var grays2 = grays;
+var yellows2 = yellows;
+var yelpos2 = yelpos; 
+var greens2 = greens;
+var grnpos2 = grnpos;
 
 var extraDebug = false;
 
@@ -51,12 +59,8 @@ function solveWord(list) {
 
 var button = document.querySelector('button');
 button.onclick = function() {
-  if(wordList <= 25){
-    extraSolve();
-    return;
-  }
   if(document.getElementById("wordInput").value.length == 5 && document.getElementById("resultInput").value.length == 5){
-    sort(document.getElementById("wordInput").value, document.getElementById("resultInput").value, grays1, yellows1, yelpos1, greens1, grnpos1);
+    sort(document.getElementById("wordInput").value, document.getElementById("resultInput").value, grays, yellows, yelpos, greens, grnpos, letters);
     console.log("word list length: " + wordList.length);
     if(wordList.length < 50){
       extraDebug = true;
@@ -67,35 +71,68 @@ button.onclick = function() {
     document.getElementById("p1").innerHTML = solveWord(wordList);
     document.getElementById("wordInput").value = solveWord(wordList);
     console.log(wordList.length);
+    if(wordList.length <= 25){
+      document.getElementById("p1").innerHTML = extraSolve();
+    }
   }
 }
 
 var extraSolve = function(){
-  var listOfGuesses;
+  var listOfGuesses = new Array();
+  var listOfGuessesWords = new Array();
   for(var i = 0; i < wordList.length; i++){
     listOfGuesses.push(0);
+    listOfGuessesWords.push(wordList[i]);
   }
   for(var i = 0; i < wordList.length; i++){
     var answer = wordList[i];
-    var letters2 = Array.from("abcdefghijklmnopqrstuvwxyz");
-    var grays2 = grays;
-    var yellows2 = yellows;
-    var yelpos2 = yelpos; 
-    var greens2 = greens;
-    var grnpos2 = grnpos;
-    for(var i1 = 0; i1 < wordList.lenght; i1++){
-      var wordList1 = wordList;
+    for(var i1 = 0; i1 < wordList.length; i1++){
+      wordList1 = wordList;
+      letters2 = letters;
+      grays2 = grays;
+      yellows2 = yellows;
+      yelpos2 = yelpos; 
+      greens2 = greens;
+      grnpos2 = grnpos;
       for(var i2 = 0; i2 < 10; i2++){
-        listOfGuesses[i1] = listOfGuesses[i1]+1;
-        if(guess == answer){break;}
-        var guess = solveWord(wordList1);
         if(i2 == 0){guess = wordList[i1];}
-        sort(guess, checkWord(guess, answer), grays2, yellows2, yelpos2, greens2, grnpos2);
+        var guess = solveWord(wordList1);
+        sort(guess, checkWord(guess, answer), grays2, yellows2, yelpos2, greens2, grnpos2, letters2);
         wordList1 = wordList1.filter(cleanList);
+        if(guess == answer){
+          listOfGuesses[i1] = listOfGuesses[i1] + i2;
+          break;
+        }
       }
     }
   }
-  return;
+  console.log(listOfGuesses);
+  console.log(listOfGuessesWords);
+  var bestGuessWords = new Array();
+  for(var i = 0; i < listOfGuesses; i++){
+    if(listOfGuesses[i] <= Math.min(listOfGuesses) ){
+      bestGuessWords.push(listOfGuessesWords[i]);
+    }
+  }
+  return bestGuessWords;
+}
+
+function checkWord(guess, answer){
+  var a = Array.from(answer);
+  var g = Array.from(guess);
+  var out = "";
+  for(var i = 0; i < 5; i++){
+    if(g[i] == a[i]){
+      out += "g";
+    }
+    else if(a.indexOf(g[i]) != -1){
+      out += "y";
+    }
+    else {
+      out += "x";
+    }
+  }
+  return out;
 }
 
 var firstButton = document.getElementById("first");
@@ -138,43 +175,44 @@ function filterByLength(word){
   return true;
 }
 
-function sort(word, result, grays, yellows, yelpos, greens, grnpos){
+function sort(word, result, grays1, yellows1, yelpos1, greens1, grnpos1, letters1){
   var res = Array.from(result);
   var wrd = Array.from(word);
+  console.log(letters1);
   for(var i = 0; i < 5; i++){
     //Grays
     if(res[i] == "x"){
-      if(grays.indexOf(word[i]) == -1){
-        grays.push(wrd[i]);
-        letters.splice(letters.indexOf(wrd[i]), 1);
+      if(grays1.indexOf(word[i]) == -1){
+        grays1.push(wrd[i]);
+        letters1.splice(letters1.indexOf(wrd[i]), 1);
       }
     }
     //Yellows
     if(res[i] == "y"){
-      if(yellows.indexOf(wrd[i]) == -1){
-        yellows.push(wrd[i]);
+      if(yellows1.indexOf(wrd[i]) == -1){
+        yellows1.push(wrd[i]);
         //console.log(i);
-        yelpos.push([i]);
+        yelpos1.push([i]);
       }
       else {
-        (yelpos[yellows.indexOf(wrd[i])]).push(i);
+        (yelpos1[yellows1.indexOf(wrd[i])]).push(i);
       }
     }
     //Greens
     if(res[i] == "g"){
-      if(grnpos.indexOf(i) == -1){
-        greens.push(wrd[i]);
-        grnpos.push(i);
+      if(grnpos1.indexOf(i) == -1){
+        greens1.push(wrd[i]);
+        grnpos1.push(i);
       }
-      for(var i1 = 0; i1 < yellows.length; i1++){
-        if(greens[greens.length-1] == yellows[i]){
-          yellows.splice(i1, 1);
-          yelpos.splice(i1, 1);
+      for(var i1 = 0; i1 < yellows1.length; i1++){
+        if(greens1[greens1.length-1] == yellows1[i]){
+          yellows1.splice(i1, 1);
+          yelpos1.splice(i1, 1);
         }
       }
-      for(var i1 = 0; i1 < yellows.length; i1++){
-        for(var i2 = 0; i2 < yelpos[i1].length; i2++){
-          if(grnpos[grnpos.length-1] == (yelpos[i1])[i2]){
+      for(var i1 = 0; i1 < yellows1.length; i1++){
+        for(var i2 = 0; i2 < yelpos1[i1].length; i2++){
+          if(grnpos1[grnpos1.length-1] == (yelpos1[i1])[i2]){
             //console.log("removed yellow: " + yellows[i1]);
             //yelpos[i1].splice(i2, 1);
           }
@@ -182,14 +220,14 @@ function sort(word, result, grays, yellows, yelpos, greens, grnpos){
       }
     }
   }
-  console.log(grays);
-  console.log(yellows);
-  for(var i = 0; i < yelpos.length; i++){
-    console.log(yelpos[i]);
+  console.log(grays1);
+  console.log(yellows1);
+  for(var i = 0; i < yelpos1.length; i++){
+    console.log(yelpos1[i]);
   }
   //console.log(yelpos);
-  console.log(greens);
-  console.log(letters);
+  console.log(greens1);
+  console.log(letters1);
 }
 
 function cleanList(word){
