@@ -84,6 +84,7 @@ var extraSolve = function(){
     listOfGuesses.push(0);
     listOfGuessesWords.push(wordList[i]);
   }
+  console.log(listOfGuessesWords);
   for(var i = 0; i < wordList.length; i++){
     var answer = wordList[i];
     for(var i1 = 0; i1 < wordList.length; i1++){
@@ -96,13 +97,12 @@ var extraSolve = function(){
       grnpos2 = grnpos;
       for(var i2 = 0; i2 < 10; i2++){
         if(i2 == 0){guess = wordList[i1];}
-        var guess = solveWord(wordList1);
         sort(guess, checkWord(guess, answer), grays2, yellows2, yelpos2, greens2, grnpos2, letters2);
         wordList1 = wordList1.filter(cleanList);
-        if(guess == answer){
-          listOfGuesses[i1] = listOfGuesses[i1] + i2;
-          break;
-        }
+        var guess = solveWord(wordList1)[0];
+        listOfGuesses[i1] = listOfGuesses[i1] + 1;
+        console.log(answer + " " + wordList[i1] + " " + guess)
+        if(guess == answer){console.log("SOLVED"); i2 = 11; break;}
       }
     }
   }
