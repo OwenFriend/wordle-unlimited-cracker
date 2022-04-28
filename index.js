@@ -139,24 +139,26 @@ var solveRemainingWords = function(){
       sort(guess, checkWord(guess, answer), grays2, yellows2, yelpos2, greens2, grnpos2, letters2);
       wordList1 = wordList1.filter(cleanList);
       //wordsLeft[j] = (wordsLeft[j] + wordList1.length);
+      console.log("length"+ wordList1.length);
+      console.log(parseInt(wordsLeft[j]) + parseInt(wordList1.length));
     }
   }
-  console.log(wordsLeft);
+  //console.log(wordsLeft);
   var smallest = 0;
   for(var i = 0; i < wordsLeft.length; i++){
     if(smallest > wordsLeft[i]){
       smallest = wordsLeft[i];
     }
   }
-  console.log(smallest);
+  //console.log(smallest);
   var out = new Array();
   for(var k = 0; k < wordsLeft.length; k++){
     if(wordsLeft[k] <= smallest){
-      console.log("word: " + wordsLeftWord[i] + "avg words: " + wordsLeft[k]);
+      //console.log("word: " + wordsLeftWord[i] + "avg words: " + wordsLeft[k]);
       out.push(wordsLeftWord[k]);
     }
   }
-  console.log(out);
+  //console.log(out);
   return Math.min(out);
 }
 
