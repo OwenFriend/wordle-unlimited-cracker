@@ -72,7 +72,7 @@ button.onclick = function() {
     document.getElementById("wordInput").value = solveWord(wordList);
     console.log(wordList.length);
     if(wordList.length <= 25){
-      document.getElementById("p1").innerHTML = extraSolve();
+      document.getElementById("p1").innerHTML = solveRemainingWords()[0];
     }
   }
 }
@@ -85,9 +85,11 @@ var extraSolve = function(){
     listOfGuessesWords.push(wordList[i]);
   }
   console.log(listOfGuessesWords);
+  answerLoop:
   for(var i = 0; i < wordList.length; i++){
     var answer = wordList[i];
-    for(var i1 = 0; i1 < wordList.length; i1++){
+    firstGuessLoop:
+    for(var j = 0; j < wordList.length; j++){
       wordList1 = wordList;
       letters2 = letters;
       grays2 = grays;
@@ -95,14 +97,15 @@ var extraSolve = function(){
       yelpos2 = yelpos; 
       greens2 = greens;
       grnpos2 = grnpos;
-      for(var i2 = 0; i2 < 10; i2++){
-        if(i2 == 0){guess = wordList[i1];}
+      solveLoop:
+      for(var k = 0; k < 10; k++){
+        if(k == 0){guess = wordList[j];}
         sort(guess, checkWord(guess, answer), grays2, yellows2, yelpos2, greens2, grnpos2, letters2);
         wordList1 = wordList1.filter(cleanList);
         var guess = solveWord(wordList1)[0];
-        listOfGuesses[i1] = listOfGuesses[i1] + 1;
-        console.log(answer + " " + wordList[i1] + " " + guess)
-        if(guess == answer){console.log("SOLVED"); i2 = 11; break;}
+        listOfGuesses[j] = listOfGuesses[j] + 1;
+        console.log(answer + " " + wordList[j] + " " + guess)
+        if(guess == answer){console.log("SOLVED"); break solveLoop;}
       }
     }
   }
@@ -115,6 +118,46 @@ var extraSolve = function(){
     }
   }
   return bestGuessWords;
+}
+
+var solveRemainingWords = function(){
+  var wordsLeft = new Array();
+  var wordsLeftWord = new Array();
+  for(var i = 0; i < wordList.length; i++){
+    wordsLeft.push(0);
+    wordsLeftWord.push(wordList[i]);
+    var answer = wordList[i];
+    for(var j = 0; j < wordList.length; j++){
+      wordList1 = wordList;
+      letters2 = letters;
+      grays2 = grays;
+      yellows2 = yellows;
+      yelpos2 = yelpos; 
+      greens2 = greens;
+      grnpos2 = grnpos;
+      var guess = wordList[j];
+      sort(guess, checkWord(guess, answer), grays2, yellows2, yelpos2, greens2, grnpos2, letters2);
+      wordList1 = wordList1.filter(cleanList);
+      //wordsLeft[j] = (wordsLeft[j] + wordList1.length);
+    }
+  }
+  console.log(wordsLeft);
+  var smallest = 0;
+  for(var i = 0; i < wordsLeft.length; i++){
+    if(smallest > wordsLeft[i]){
+      smallest = wordsLeft[i];
+    }
+  }
+  console.log(smallest);
+  var out = new Array();
+  for(var k = 0; k < wordsLeft.length; k++){
+    if(wordsLeft[k] <= smallest){
+      console.log("word: " + wordsLeftWord[i] + "avg words: " + wordsLeft[k]);
+      out.push(wordsLeftWord[k]);
+    }
+  }
+  console.log(out);
+  return Math.min(out);
 }
 
 function checkWord(guess, answer){
@@ -223,41 +266,62 @@ function sort(word, result, grays1, yellows1, yelpos1, greens1, grnpos1, letters
 }
 
 function cleanList(word){
+  var grays1;
+  var yellows1;
+  var yelpos1;
+  var greens1;
+  var grnpos1;
+  if(wordList.length <= 25){
+    grays1 = grays2;
+    yellows1 = yellows2;
+    yelpos1 = yelpos2;
+    greens1 = greens2;
+    grnpos1 = grnpos2;
+  }
+  else{
+    grays1 = grays;
+    yellows1 = yellows;
+    yelpos1 = yelpos;
+    greens1 = greens;
+    grnpos1 = grnpos;
+  }
   //Grays
-  for(var i = 0; i < grays.length; i++){
-    if(word.includes(grays[i])){
+  for(var i = 0; i < grays1.length; i++){
+    if(word.includes(grays1[i])){
       debug(word, "contained grays");
       return false;
     }
   }
   //Greens
-  for(var i = 0; i < greens.length; i++){
-    if(Array.from(word)[grnpos[i]] != greens[i]){
+  for(var i = 0; i < greens1.length; i++){
+    if(Array.from(word)[grnpos1[i]] != greens1[i]){
       debug(word, "didnt contain green in correct spot");
       return false;
     }
   }
 
   //Yellows
-  for(var i = 0; i < yellows.length; i++){
+  for(var i = 0; i < yellows1.length; i++){
     //console.log("y");
-    if(word.includes(yellows[i])){
+    if(word.includes(yellows1[i])){
       debugX(word, "contains yellow");
-      for(var i1 = 0; i1 < yelpos[i].length; i1++){
-        if(Array.from(word)[(yelpos[i][i1])] == yellows[i] ){
-          debug(word, "contained yellow: " + yellows[i] + " in spot" + (yelpos[i][i1] + 1));
+      for(var i1 = 0; i1 < yelpos1[i].length; i1++){
+        if(Array.from(word)[(yelpos1[i][i1])] == yellows1[i] ){
+          debug(word, "contained yellow: " + yellows1[i] + " in spot" + (yelpos1[i][i1] + 1));
           return false;
         }
       }
-      debugX(word, "did not contain yellow: " + yellows[i] + " in spots: " + yelpos[i]);
+      debugX(word, "did not contain yellow: " + yellows1[i] + " in spots: " + yelpos1[i]);
     }
-    else if(yellows.length > 0){
+    else if(yellows1.length > 0){
       debug(word, "didnt contain yellow");
       return false;
     }
   }
   return true;
 }
+
+
 
 
 
