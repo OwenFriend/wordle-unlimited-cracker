@@ -72,7 +72,7 @@ button.onclick = function() {
     document.getElementById("wordInput").value = solveWord(wordList);
     console.log(wordList.length);
     if(wordList.length <= 25){
-      document.getElementById("p1").innerHTML = solveRemainingWords()[0];
+      document.getElementById("p1").innerHTML = solveRemainingWords(grays, yellows, yelpos, greens, grnpos, letters)[0];
     }
   }
 }
@@ -120,8 +120,10 @@ var extraSolve = function(){
   return bestGuessWords;
 }
 
-var solveRemainingWords = function(){
-  const grays3 = grays;
+var solveRemainingWords = function(grays1, yellows1, yelpos1, greens1, grnpos1, letters1){
+  console.log("grays: " + grays);
+  const random = grays;
+  console.log(random);
   const yellows3 = yellows;
   const yelpos3 = yelpos;
   const greens3 = greens;
@@ -135,18 +137,18 @@ var solveRemainingWords = function(){
     var answer = wordList[i];
     for(var j = 0; j < wordList.length; j++){
       var wordList2 = new Array();
-      letters2 = letters3;
-      grays2 = grays3;
-      yellows2 = yellows3;
-      yelpos2 = yelpos3; 
-      greens2 = greens3;
-      grnpos2 = grnpos3;
+      var letters4 = letters3;
+      var example = random;
+      var yellows4 = yellows3;
+      var yelpos4 = yelpos3; 
+      var greens4 = greens3;
+      var grnpos4 = grnpos3;
       var guess = wordList[j];
-      sort(guess, checkWord(guess, answer), grays2, yellows2, yelpos2, greens2, grnpos2, letters2);
+      sort(guess, checkWord(guess, answer), example, yellows4, yelpos4, greens4, grnpos4, letters4);
       wordList2 = wordList.filter(cleanList);
       //console.log(i*j);
       //console.log(wordList);
-      /console.log(grays3);
+      console.log(random);
       //console.log(wordList[j]);
       //console.log(wordList2);
       //console.log(wordList.filter(cleanList));
