@@ -121,8 +121,10 @@ var extraSolve = function(){
 }
 
 var solveRemainingWords = function(grays1, yellows1, yelpos1, greens1, grnpos1, letters1){
+  //Sort changes example which changes random bc they are equal which changes grays bc they are equal
   console.log("grays: " + grays);
   const random = grays;
+  const THISSHOULDNTCHANGE = grays.length;
   console.log(random);
   const yellows3 = yellows;
   const yelpos3 = yelpos;
@@ -148,7 +150,7 @@ var solveRemainingWords = function(grays1, yellows1, yelpos1, greens1, grnpos1, 
       wordList2 = wordList.filter(cleanList);
       //console.log(i*j);
       //console.log(wordList);
-      console.log(random);
+      console.log(THISSHOULDNTCHANGE);
       //console.log(wordList[j]);
       //console.log(wordList2);
       //console.log(wordList.filter(cleanList));
