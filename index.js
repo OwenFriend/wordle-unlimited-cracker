@@ -121,26 +121,39 @@ var extraSolve = function(){
 }
 
 var solveRemainingWords = function(){
-  var wordsLeft = new Array();
-  var wordsLeftWord = new Array();
+  const grays3 = grays;
+  const yellows3 = yellows;
+  const yelpos3 = yelpos;
+  const greens3 = greens;
+  const grnpos3 = grnpos;
+  const letters3 = letters;
+  const wordsLeft = new Array();
+  const wordsLeftWord = new Array();
   for(var i = 0; i < wordList.length; i++){
     wordsLeft.push(0);
     wordsLeftWord.push(wordList[i]);
     var answer = wordList[i];
     for(var j = 0; j < wordList.length; j++){
-      wordList1 = wordList;
-      letters2 = letters;
-      grays2 = grays;
-      yellows2 = yellows;
-      yelpos2 = yelpos; 
-      greens2 = greens;
-      grnpos2 = grnpos;
+      var wordList2 = new Array();
+      letters2 = letters3;
+      grays2 = grays3;
+      yellows2 = yellows3;
+      yelpos2 = yelpos3; 
+      greens2 = greens3;
+      grnpos2 = grnpos3;
       var guess = wordList[j];
       sort(guess, checkWord(guess, answer), grays2, yellows2, yelpos2, greens2, grnpos2, letters2);
-      wordList1 = wordList1.filter(cleanList);
+      wordList2 = wordList.filter(cleanList);
+      //console.log(i*j);
+      //console.log(wordList);
+      /console.log(grays3);
+      //console.log(wordList[j]);
+      //console.log(wordList2);
+      //console.log(wordList.filter(cleanList));
+      //console.log("g: " + guess + "A: " + answer + "C: " + checkWord(guess, answer));
       //wordsLeft[j] = (wordsLeft[j] + wordList1.length);
-      console.log("length"+ wordList1.length);
-      console.log(parseInt(wordsLeft[j]) + parseInt(wordList1.length));
+      //console.log("length"+ wordList1.length);
+      //console.log(parseInt(wordsLeft[j]) + parseInt(wordList1.length));
     }
   }
   //console.log(wordsLeft);
