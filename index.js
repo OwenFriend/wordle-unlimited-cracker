@@ -121,62 +121,64 @@ var extraSolve = function(){
 }
 
 var solveRemainingWords = function(grays1, yellows1, yelpos1, greens1, grnpos1, letters1){
-  //Sort changes example which changes random bc they are equal which changes grays bc they are equal
-  console.log("grays: " + grays);
-  const random = grays;
-  const THISSHOULDNTCHANGE = grays.length;
-  console.log(random);
+  //Sort changes example which changes random bc they are equal which changes grays bc they are equal;
+  const grays3 = grays;
   const yellows3 = yellows;
   const yelpos3 = yelpos;
   const greens3 = greens;
   const grnpos3 = grnpos;
   const letters3 = letters;
-  const wordsLeft = new Array();
-  const wordsLeftWord = new Array();
+  var wordsLeft = new Array();
+  var wordsLeftWord = new Array();
   for(var i = 0; i < wordList.length; i++){
     wordsLeft.push(0);
     wordsLeftWord.push(wordList[i]);
+  }
+  for(var i = 0; i < wordList.length; i++){
     var answer = wordList[i];
     for(var j = 0; j < wordList.length; j++){
       var wordList2 = new Array();
-      var letters4 = letters3;
-      var example = random;
-      var yellows4 = yellows3;
-      var yelpos4 = yelpos3; 
-      var greens4 = greens3;
-      var grnpos4 = grnpos3;
+      letters2 = newArray(letters3);
+      grays2 = newArray(grays3);
+      yellows2 = newArray(yellows3);
+      yelpos2 = newArray(yelpos3); 
+      greens2 = newArray(greens3);
+      grnpos2 = newArray(grnpos3);
       var guess = wordList[j];
-      sort(guess, checkWord(guess, answer), example, yellows4, yelpos4, greens4, grnpos4, letters4);
+      sort(guess, checkWord(guess, answer), grays2, yellows2, yelpos2, greens2, grnpos2, letters2);
       wordList2 = wordList.filter(cleanList);
       //console.log(i*j);
       //console.log(wordList);
-      console.log(THISSHOULDNTCHANGE);
       //console.log(wordList[j]);
       //console.log(wordList2);
       //console.log(wordList.filter(cleanList));
-      //console.log("g: " + guess + "A: " + answer + "C: " + checkWord(guess, answer));
-      //wordsLeft[j] = (wordsLeft[j] + wordList1.length);
+      console.log("A: " + answer + "G: " + guess + "O: " + checkWord(guess, answer));
+      console.log(wordList2);
+      console.log(wordList2.length);
+      wordsLeft[j] = (wordsLeft[j] + wordList2.length);
       //console.log("length"+ wordList1.length);
       //console.log(parseInt(wordsLeft[j]) + parseInt(wordList1.length));
     }
   }
+  console.log(wordsLeftWord);
+  console.log(wordsLeft);
   //console.log(wordsLeft);
-  var smallest = 0;
+  var smallest = ;
   for(var i = 0; i < wordsLeft.length; i++){
     if(smallest > wordsLeft[i]){
       smallest = wordsLeft[i];
     }
   }
-  //console.log(smallest);
+  console.log(smallest);
   var out = new Array();
   for(var k = 0; k < wordsLeft.length; k++){
     if(wordsLeft[k] <= smallest){
-      //console.log("word: " + wordsLeftWord[i] + "avg words: " + wordsLeft[k]);
+      console.log("word: " + wordsLeftWord[i] + "avg words: " + wordsLeft[k]);
       out.push(wordsLeftWord[k]);
     }
   }
   //console.log(out);
-  return Math.min(out);
+  return out;
 }
 
 function checkWord(guess, answer){
@@ -368,6 +370,14 @@ function addEmptyL(){
 
 function addEmptyW(){
   wValues.push(0);
+}
+
+function newArray(array){
+  var out = new Array();
+  for(var i = 0; i < array.length; i++){
+    out.push(array[i]);
+  }
+  return out;
 }
 
 function debugX(word, message){
