@@ -410,17 +410,15 @@ testButton.onclick = function() {
     greens = new Array();
     grnpos = new Array();
     for(var i1 = 0; i1 < 10; i1++){
-      totalGuess++;
-      if(i1 == 7){failures++;}
-      if(guess == answer){break;}
+      var guess = solveWord(wordList);
+      sort(guess, checkWord(guess, answer), grays, yellows, yelpos, greens, grnpos, letters);
+      wordList = wordList.filter(cleanList);
       if(wordList.length <= 25){
         guess = solveRemainingWords(grays, yellows, yelpos, greens, grnpos, letters)[0];
       }
-      else{
-        var guess = solveWord(wordList);
-      }
-      sort(guess, checkWord(guess, answer), grays, yellows, yelpos, greens, grnpos, letters);
-      wordList = wordList.filter(cleanList);
+      totalGuess++;
+      if(i1 == 7){failures++;}
+      if(guess == answer){break;}
     }
     console.log(i + "/" + totalWords);
   }
