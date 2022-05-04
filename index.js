@@ -1,6 +1,7 @@
 // Import stylesheets
 import './style.css';
 let wordList = require("./wordlist.js");
+const testList = wordList;
 //document.getElementById("p1").innerHTML = wordList;
 
 // Write Javascript code!
@@ -163,7 +164,7 @@ var solveRemainingWords = function(grays1, yellows1, yelpos1, greens1, grnpos1, 
   console.log(wordsLeftWord);
   console.log(wordsLeft);
   //console.log(wordsLeft);
-  var smallest = ;
+  var smallest = 100;
   for(var i = 0; i < wordsLeft.length; i++){
     if(smallest > wordsLeft[i]){
       smallest = wordsLeft[i];
@@ -390,6 +391,40 @@ function debug(word, reason){
   if(extraDebug == true){
     console.log("removed word: " + word + ", reason: " + reason);
   }
+}
+
+var testButton = document.getElementById("TestButton");
+testButton.onclick = function() {
+  var totalGuess = 0;
+  var totalWords = testList.length;
+  var failures = 0;
+  console.log(totalWords);
+  for(var i = 0; i < totalWords; i++){
+    var answer = testList[i];
+    //document.getElementById("p1").innerHTML = i + "/" + totalWords;
+    wordList = require("./wordlist.js");
+    letters = Array.from("abcdefghijklmnopqrstuvwxyz");
+    grays = new Array();
+    yellows = new Array();
+    yelpos = new Array(); 
+    greens = new Array();
+    grnpos = new Array();
+    for(var i1 = 0; i1 < 10; i1++){
+      totalGuess++;
+      if(i1 == 7){failures++;}
+      if(guess == answer){break;}
+      if(wordList.length <= 25){
+        guess = solveRemainingWords(grays, yellows, yelpos, greens, grnpos, letters)[0];
+      }
+      else{
+        var guess = solveWord(wordList);
+      }
+      sort(guess, checkWord(guess, answer), grays, yellows, yelpos, greens, grnpos, letters);
+      wordList = wordList.filter(cleanList);
+    }
+    /console.log(i + "/" + totalWords);
+  }
+  document.getElementById("p1").innerHTML = "Average guesses: " + (totalGuess/totalWords) + ", Total failures: " + failures;
 }
 
 //usage:
