@@ -422,7 +422,7 @@ testButton.onclick = function() {
       sort(guess, checkWord(guess, answer), grays, yellows, yelpos, greens, grnpos, letters);
       wordList = wordList.filter(cleanList);
     }
-    /console.log(i + "/" + totalWords);
+    console.log(i + "/" + totalWords);
   }
   document.getElementById("p1").innerHTML = "Average guesses: " + (totalGuess/totalWords) + ", Total failures: " + failures;
 }
