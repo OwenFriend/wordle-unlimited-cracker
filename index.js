@@ -30,6 +30,7 @@ var extraDebug = false;
 
 var wordLength = 5;
 
+var test = false;
 //FInd the average amount of guesses to get a certain right answer for each word
 
 function solveWord(list) {
@@ -293,7 +294,14 @@ function cleanList(word){
   var yelpos1;
   var greens1;
   var grnpos1;
-  if(wordList.length <= 25){
+  if(test == true){
+    grays1 = grays;
+    yellows1 = yellows;
+    yelpos1 = yelpos;
+    greens1 = greens;
+    grnpos1 = grnpos;
+  }
+  else if(wordList.length <= 25){
     grays1 = grays2;
     yellows1 = yellows2;
     yelpos1 = yelpos2;
@@ -395,27 +403,29 @@ function debug(word, reason){
 
 var testButton = document.getElementById("TestButton");
 testButton.onclick = function() {
+  test = true;
   var totalGuess = 0;
   var totalWords = testList.length;
   var failures = 0;
   console.log(totalWords);
-  for(var i = 0; i < totalWords; i++){
+  for(var i = 0; i < 5; i++){
     var answer = testList[i];
     //document.getElementById("p1").innerHTML = i + "/" + totalWords;
-    wordList = require("./wordlist.js");
+    var wordListTest = require("./wordlist.js");
     letters = Array.from("abcdefghijklmnopqrstuvwxyz");
     grays = new Array();
     yellows = new Array();
     yelpos = new Array(); 
     greens = new Array();
     grnpos = new Array();
+    var guess = solveWord(wordList);
     for(var i1 = 0; i1 < 10; i1++){
-      var guess = solveWord(wordList);
       sort(guess, checkWord(guess, answer), grays, yellows, yelpos, greens, grnpos, letters);
-      wordList = wordList.filter(cleanList);
+      wordListTest = wordListTest.filter(cleanList);
       if(wordList.length <= 25){
         guess = solveRemainingWords(grays, yellows, yelpos, greens, grnpos, letters)[0];
       }
+      console.log(guess[0] + "A: " + answer);
       totalGuess++;
       if(i1 == 7){failures++;}
       if(guess == answer){break;}
