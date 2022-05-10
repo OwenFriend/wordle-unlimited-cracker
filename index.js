@@ -427,7 +427,7 @@ testButton.onclick = function() {
   console.log(totalWords);
 
   var avgGuess = 0;
-  for(var i = 0; i < testist.length; i++){
+  for(var i = 0; i < testList.length; i++){
     var answer = testList[i];
     //console.log(answer);
     //document.getElementById("p1").innerHTML = i + "/" + totalWords;
@@ -458,7 +458,10 @@ testButton.onclick = function() {
       //console.log(wordList);
       //console.log(wordList.length);
       totalGuess++;
-      if(j == 7){failures++;}
+      if(j == 7){
+        failures++;
+        console.log("anser: " + answer + " guess: " + guess);
+      }
       if(guess == answer){break;}
       if(wordList.length <= 25){
         guess = solveRemainingWords()[0];
