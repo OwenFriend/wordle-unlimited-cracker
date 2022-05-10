@@ -426,10 +426,10 @@ testButton.onclick = function() {
     greens = new Array();
     grnpos = new Array();
     var guess = solveWord(wordList)[0];
-    for(var i1 = 0; i1 < 10; i1++){
-      console.log("grays1: " + grays);
+    for(var i1 = 0; i1 < 7; i1++){
+      //console.log("grays1: " + grays);
       sort(guess, checkWord(guess, answer));
-      console.log("grays2: " + grays);
+      //console.log("grays2: " + grays);
       wordList = wordList.filter(cleanList);
       totalGuess++;
       if(i1 == 7){failures++;}
@@ -438,8 +438,8 @@ testButton.onclick = function() {
         guess = solveRemainingWords()[0];
       }
       //console.log(wordListTest);
-      console.log(guess[0] + "A: " + answer);
-      console.log("grays3: " + grays);
+      //console.log(guess[0] + "A: " + answer);
+      //console.log("grays3: " + grays);
     }
     console.log(i + "/" + totalWords);
   }
