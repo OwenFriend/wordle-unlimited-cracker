@@ -111,8 +111,8 @@ var extraSolve = function(){
       }
     }
   }
-  console.log(listOfGuesses);
-  console.log(listOfGuessesWords);
+  //console.log(listOfGuesses);
+  //console.log(listOfGuessesWords);
   var bestGuessWords = new Array();
   for(var i = 0; i < listOfGuesses; i++){
     if(listOfGuesses[i] <= Math.min(listOfGuesses) ){
@@ -132,6 +132,7 @@ var solveRemainingWords = function(){
   const oldletters = newArray(letters);
   var wordsLeft = new Array();
   var wordsLeftWord = new Array();
+  //console.log(wordList);
   for(var i = 0; i < wordList.length; i++){
     wordsLeft.push(0);
     wordsLeftWord.push(wordList[i]);
@@ -148,6 +149,7 @@ var solveRemainingWords = function(){
       letters = newArray(oldletters);
       var guess = wordList[j];
       //console.log(guess, answer);
+      //console.log(checkWord(guess, answer));
       sort(guess, checkWord(guess, answer));
       wordList2 = wordList.filter(cleanList);
       //console.log(i*j);
@@ -187,11 +189,12 @@ var solveRemainingWords = function(){
   greens = newArray(oldgreens);
   grnpos = newArray(oldgrnpos);
   letters = newArray(oldletters);
+  //console.log(wordsLeftWord);
   return out;
 }
 
 function checkWord(guess, answer){
-  console.log(answer, guess);
+  //console.log(answer, guess);
   var a = Array.from(answer);
   var g = Array.from(guess);
   
@@ -209,7 +212,7 @@ function checkWord(guess, answer){
     }
   }
   if(answer == "abbey"){
-    /console.log(out);
+    //console.log(out);
   }
   return out;
 }
@@ -272,7 +275,7 @@ function sort(word, result){
         //console.log(i);
         yelpos.push([i]);
       }
-      else {
+      else if(yelpos[yellows.indexOf(wrd[i])].indexOf(i) == -1) {
         (yelpos[yellows.indexOf(wrd[i])]).push(i);
       }
     }
@@ -424,7 +427,7 @@ testButton.onclick = function() {
   console.log(totalWords);
 
   var avgGuess = 0;
-  for(var i = 0; i < 4; i++){
+  for(var i = 0; i < testist.length; i++){
     var answer = testList[i];
     //console.log(answer);
     //document.getElementById("p1").innerHTML = i + "/" + totalWords;
@@ -436,18 +439,30 @@ testButton.onclick = function() {
     greens = new Array();
     grnpos = new Array();
     var guess = solveWord(wordList)[0];
+    //console.log("starting");
     for(var j = 0; j < 8; j++){
       //console.log("grays1: " + grays);
+      //console.log(answer, guess);
       sort(guess, checkWord(guess, answer));
       //console.log("grays: " + grays);
-      console.log(answer + "," + guess);
+      // console.log(grays);
+      // console.log(yellows);
+      // console.log(yelpos);
+      // console.log(greens);
+      // console.log("word list");
+      // console.log(wordList);
       wordList = wordList.filter(cleanList);
-      console.log(wordList.length);
+      if(wordList.length == 0){
+        break;
+      }
+      //console.log(wordList);
+      //console.log(wordList.length);
       totalGuess++;
       if(j == 7){failures++;}
       if(guess == answer){break;}
       if(wordList.length <= 25){
         guess = solveRemainingWords()[0];
+        //console.log("SOlve: " + guess);
       }
       //console.log(wordListTest);
       //console.log(guess + "A: " + answer);
