@@ -191,9 +191,10 @@ var solveRemainingWords = function(){
 }
 
 function checkWord(guess, answer){
+  console.log(answer, guess);
   var a = Array.from(answer);
   var g = Array.from(guess);
-  //console.log(a, g);
+  
   var out = "";
   for(var k = 0; k < 5; k++){
     //console.log(a[k], g[k]);
@@ -206,6 +207,9 @@ function checkWord(guess, answer){
     else {
       out += "x";
     }
+  }
+  if(answer == "abbey"){
+    /console.log(out);
   }
   return out;
 }
@@ -420,9 +424,9 @@ testButton.onclick = function() {
   console.log(totalWords);
 
   var avgGuess = 0;
-  for(var i = 0; i < 2; i++){
+  for(var i = 0; i < 4; i++){
     var answer = testList[i];
-    console.log(answer);
+    //console.log(answer);
     //document.getElementById("p1").innerHTML = i + "/" + totalWords;
     wordList = require("./wordlist.js");
     letters = Array.from("abcdefghijklmnopqrstuvwxyz");
@@ -438,6 +442,7 @@ testButton.onclick = function() {
       //console.log("grays: " + grays);
       console.log(answer + "," + guess);
       wordList = wordList.filter(cleanList);
+      console.log(wordList.length);
       totalGuess++;
       if(j == 7){failures++;}
       if(guess == answer){break;}
