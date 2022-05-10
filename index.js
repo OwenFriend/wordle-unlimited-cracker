@@ -149,7 +149,7 @@ var solveRemainingWords = function(){
       var guess = wordList[j];
       //console.log(guess, answer);
       sort(guess, checkWord(guess, answer));
-      /wordList2 = wordList.filter(cleanList);
+      wordList2 = wordList.filter(cleanList);
       //console.log(i*j);
       //console.log(wordList);
       //console.log(wordList[j]);
@@ -419,9 +419,10 @@ testButton.onclick = function() {
   var failures = 0;
   console.log(totalWords);
 
-  var avgGuess;
-  for(var i = 0; i < 1; i++){
+  var avgGuess = 0;
+  for(var i = 0; i < 2; i++){
     var answer = testList[i];
+    console.log(answer);
     //document.getElementById("p1").innerHTML = i + "/" + totalWords;
     wordList = require("./wordlist.js");
     letters = Array.from("abcdefghijklmnopqrstuvwxyz");
@@ -431,25 +432,26 @@ testButton.onclick = function() {
     greens = new Array();
     grnpos = new Array();
     var guess = solveWord(wordList)[0];
-    for(var i1 = 0; i1 < 8; i1++){
+    for(var j = 0; j < 8; j++){
       //console.log("grays1: " + grays);
       sort(guess, checkWord(guess, answer));
       //console.log("grays: " + grays);
-      //console.log(answer + "," + guess);
+      console.log(answer + "," + guess);
       wordList = wordList.filter(cleanList);
       totalGuess++;
-      if(i1 == 7){failures++;}
+      if(j == 7){failures++;}
       if(guess == answer){break;}
       if(wordList.length <= 25){
         guess = solveRemainingWords()[0];
       }
       //console.log(wordListTest);
-      //console.log(guess[0] + "A: " + answer);
+      //console.log(guess + "A: " + answer);
       //console.log("grays3: " + grays);
     }
     //console.log(i + "/" + totalWords);
-    avgGuess = totalGuess/i;
+    avgGuess++;
   }
+  avgGuess = totalGuess/avgGuess;
   document.getElementById("p1").innerHTML = "Average guesses: " + (avgGuess) + ", Total failures: " + failures;
 }
 
