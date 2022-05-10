@@ -247,7 +247,7 @@ function filterByLength(word){
   return true;
 }
 
-function sort(word, result, grays, yellows, yelpos, greens, grnpos, letters){
+function sort(word, result){
   var res = Array.from(result);
   var wrd = Array.from(word);
   for(var i = 0; i < 5; i++){
@@ -295,16 +295,16 @@ function sort(word, result, grays, yellows, yelpos, greens, grnpos, letters){
 }
 
 function cleanList(word){
-  var grays;
-  var yellows;
-  var yelpos;
-  var greens;
-  var grnpos;
-  grays = grays;
-  yellows = yellows;
-  yelpos = yelpos;
-  greens = greens;
-  grnpos = grnpos;
+  // var grays;
+  // var yellows;
+  // var yelpos;
+  // var greens;
+  // var grnpos;
+  // grays = grays;
+  // yellows = yellows;
+  // yelpos = yelpos;
+  // greens = greens;
+  // grnpos = grnpos;
   // if(test == true){
   //   grays = grays;
   //   yellows = yellows;
@@ -418,26 +418,28 @@ testButton.onclick = function() {
   for(var i = 0; i < 1; i++){
     var answer = testList[i];
     //document.getElementById("p1").innerHTML = i + "/" + totalWords;
-    var wordListTest = require("./wordlist.js");
+    var wordList = require("./wordlist.js");
     letters = Array.from("abcdefghijklmnopqrstuvwxyz");
     grays = new Array();
     yellows = new Array();
     yelpos = new Array(); 
     greens = new Array();
     grnpos = new Array();
-    var guess = solveWord(wordList);
+    var guess = solveWord(wordList)[0];
     for(var i1 = 0; i1 < 10; i1++){
-      sort(guess, checkWord(guess, answer), grays, yellows, yelpos, greens, grnpos, letters);
-      wordListTest = wordListTest.filter(cleanList);
+      console.log("grays1: " + grays);
+      sort(guess, checkWord(guess, answer));
+      console.log("grays2: " + grays);
+      wordList = wordList.filter(cleanList);
       totalGuess++;
       if(i1 == 7){failures++;}
       if(guess == answer){break;}
       if(wordList.length <= 25){
         guess = solveRemainingWords()[0];
       }
-      console.log(wordListTest);
+      //console.log(wordListTest);
       console.log(guess[0] + "A: " + answer);
-      console.log("grays: " + grays);
+      console.log("grays3: " + grays);
     }
     console.log(i + "/" + totalWords);
   }
