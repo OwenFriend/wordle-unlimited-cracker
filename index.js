@@ -460,6 +460,7 @@ testButton.onclick = function() {
       totalGuess++;
       if(j == 7){
         failures++;
+        console.log(wordList);
         console.log("anser: " + answer + " guess: " + guess);
       }
       if(guess == answer){break;}
@@ -467,6 +468,7 @@ testButton.onclick = function() {
         guess = solveRemainingWords()[0];
         //console.log("SOlve: " + guess);
       }
+      else{guess = solveWord(wordList)[0];}
       //console.log(wordListTest);
       //console.log(guess + "A: " + answer);
       //console.log("grays3: " + grays);
