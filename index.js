@@ -176,10 +176,12 @@ var solveRemainingWords = function(){
   }
   //console.log(smallest);
   var out = new Array();
+  var out1 = new Array();
   for(var k = 0; k < wordsLeft.length; k++){
     if(wordsLeft[k] <= smallest){
       //console.log("word: " + wordsLeftWord[i] + "avg words: " + wordsLeft[k]);
       out.push(wordsLeftWord[k]);
+      out1.push(wordsLeft[k]);
     }
   }
   //console.log(out);
@@ -190,7 +192,7 @@ var solveRemainingWords = function(){
   grnpos = newArray(oldgrnpos);
   letters = newArray(oldletters);
   //console.log(wordsLeftWord);
-  return out;
+  return {out, out1};
 }
 
 function checkWord(guess, answer){
