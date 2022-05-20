@@ -140,6 +140,7 @@ var solveRemainingWords = function(){
   for(var i = 0; i < wordList.length; i++){
     var answer = wordList[i];
     for(var j = 0; j < wordList.length; j++){
+      //console.log(wordList);
       var wordList2 = new Array();
       grays = newArray(oldgrays);
       yellows = newArray(oldyellows);
@@ -150,12 +151,17 @@ var solveRemainingWords = function(){
       var guess = wordList[j];
       //console.log(guess, answer);
       //console.log(checkWord(guess, answer));
+      //console.log(grays, yellows, greens);
       sort(guess, checkWord(guess, answer));
-      wordList2 = wordList.filter(cleanList);
+      wordList2 = newArray(wordList.filter(cleanList));
       //console.log(i*j);
       //console.log(wordList);
       //console.log(wordList[j]);
-      //console.log(wordList2);
+      console.log(wordList2.length);
+      if(wordList2.length == 0){
+        //console.log(answer, guess);
+        //console.log(grays, yellows, greens);
+      }
       //console.log(wordList.filter(cleanList));
       //console.log("A: " + answer + "G: " + guess + "O: " + checkWord(guess, answer));
       //console.log(wordList2);
@@ -213,9 +219,7 @@ function checkWord(guess, answer){
       out += "x";
     }
   }
-  if(answer == "abbey"){
-    //console.log(out);
-  }
+
   return out;
 }
 
