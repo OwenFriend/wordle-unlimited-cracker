@@ -159,7 +159,7 @@ var solveRemainingWords = function(){
       //console.log(i*j);
       //console.log(wordList);
       //console.log(wordList[j]);
-      console.log(wordList2.length);
+      //console.log(wordList2.length);
       if(wordList2.length == 0){
       }
       wordsLeft[j] = (wordsLeft[j] + wordList2.length);
@@ -186,8 +186,8 @@ var solveRemainingWords = function(){
   greens = newArray(oldgreens);
   grnpos = newArray(oldgrnpos);
   letters = newArray(oldletters);
-  console.log(wordsLeftWord);
-  console.log(wordsLeft);
+  //console.log(wordsLeftWord);
+  //console.log(wordsLeft);
   var out1Avg = new Array();
   for(var l = 0; l < out1.length; l++){
     out1Avg.push(out1[l]/wordList.length);
@@ -411,8 +411,7 @@ testButton.onclick = function() {
   var avgGuess = 0;
   for(var i = 0; i < testList.length; i++){
     var answer = testList[i];
-    //console.log(answer);
-    //document.getElementById("p1").innerHTML = i + "/" + totalWords;
+
     wordList = require("./wordlist.js");
     letters = Array.from("abcdefghijklmnopqrstuvwxyz");
     grays = new Array();
@@ -421,24 +420,12 @@ testButton.onclick = function() {
     greens = new Array();
     grnpos = new Array();
     var guess = solveWord(wordList)[0];
-    //console.log("starting");
     for(var j = 0; j < 8; j++){
-      //console.log("grays1: " + grays);
-      //console.log(answer, guess);
       sort(guess, checkWord(guess, answer));
-      //console.log("grays: " + grays);
-      // console.log(grays);
-      // console.log(yellows);
-      // console.log(yelpos);
-      // console.log(greens);
-      // console.log("word list");
-      // console.log(wordList);
       wordList = wordList.filter(cleanList);
       if(wordList.length == 0){
         break;
       }
-      //console.log(wordList);
-      //console.log(wordList.length);
       totalGuess++;
       if(j == 7){
         failures++;
@@ -447,15 +434,10 @@ testButton.onclick = function() {
       }
       if(guess == answer){break;}
       if(wordList.length <= 25){
-        guess = solveRemainingWords()[0];
-        //console.log("SOlve: " + guess);
+        guess = solveRemainingWords().out[0];
       }
       else{guess = solveWord(wordList)[0];}
-      //console.log(wordListTest);
-      //console.log(guess + "A: " + answer);
-      //console.log("grays3: " + grays);
     }
-    //console.log(i + "/" + totalWords);
     avgGuess++;
   }
   avgGuess = totalGuess/avgGuess;
