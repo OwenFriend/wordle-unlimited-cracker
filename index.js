@@ -18,20 +18,14 @@ var yelpos = new Array();
 var greens = new Array();
 var grnpos = new Array();
 
-// var wordList1 = wordList;
-// var letters2 = letters;
-// var grays2 = grays;
-// var yellows2 = yellows;
-// var yelpos2 = yelpos; 
-// var greens2 = greens;
-// var grnpos2 = grnpos;
-
 var extraDebug = false;
 
 var wordLength = 5;
 
 var test = false;
-//FInd the average amount of guesses to get a certain right answer for each word
+//Last test resulted in an avg guess of 3.6181425485961123, Total failures: 3
+
+//If its the second guess use every word in the possilbe ansers for a guess
 
 function solveWord(list) {
     lValues = new Array();
@@ -411,7 +405,6 @@ testButton.onclick = function() {
   var avgGuess = 0;
   for(var i = 0; i < testList.length; i++){
     var answer = testList[i];
-
     wordList = require("./wordlist.js");
     letters = Array.from("abcdefghijklmnopqrstuvwxyz");
     grays = new Array();
