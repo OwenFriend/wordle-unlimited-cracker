@@ -74,7 +74,7 @@ button.onclick = function() {
     document.getElementById("wordInput").value = solveWord(wordList);
     console.log(wordList.length);
     if(wordList.length <= 25){
-      document.getElementById("p1").innerHTML = solveRemainingWords()[0];
+      solveRemainingWords();
     }
   }
 }
@@ -126,10 +126,11 @@ var solveRemainingWords = function(){
   //Sort changes example which changes random bc they are equal which changes grays bc they are equal;
   const oldgrays = newArray(grays);
   const oldyellows = newArray(yellows);
-  const oldyelpos = newArray(yelpos);
+  const oldyelpos = newNestArray(yelpos);
   const oldgreens = newArray(greens);
   const oldgrnpos = newArray(grnpos);
   const oldletters = newArray(letters);
+  const oldwordlist = newArray(wordList);
   var wordsLeft = new Array();
   var wordsLeftWord = new Array();
   //console.log(wordList);
@@ -141,10 +142,11 @@ var solveRemainingWords = function(){
     var answer = wordList[i];
     for(var j = 0; j < wordList.length; j++){
       //console.log(wordList);
+      wordList = newArray(oldwordlist);
       var wordList2 = new Array();
       grays = newArray(oldgrays);
       yellows = newArray(oldyellows);
-      yelpos = newArray(oldyelpos);
+      yelpos = newNestArray(oldyelpos);
       greens = newArray(oldgreens);
       grnpos = newArray(oldgrnpos);
       letters = newArray(oldletters);
@@ -159,33 +161,20 @@ var solveRemainingWords = function(){
       //console.log(wordList[j]);
       console.log(wordList2.length);
       if(wordList2.length == 0){
-        //console.log(answer, guess);
-        //console.log(grays, yellows, greens);
       }
-      //console.log(wordList.filter(cleanList));
-      //console.log("A: " + answer + "G: " + guess + "O: " + checkWord(guess, answer));
-      //console.log(wordList2);
-      //console.log(wordList2.length);
       wordsLeft[j] = (wordsLeft[j] + wordList2.length);
-      //console.log("length"+ wordList1.length);
-      //console.log(parseInt(wordsLeft[j]) + parseInt(wordList1.length));
     }
   }
-  //console.log(wordsLeftWord);
-  //console.log(wordsLeft);
-  //console.log(wordsLeft);
   var smallest = 100;
   for(var i = 0; i < wordsLeft.length; i++){
     if(smallest > wordsLeft[i]){
       smallest = wordsLeft[i];
     }
   }
-  //console.log(smallest);
   var out = new Array();
   var out1 = new Array();
   for(var k = 0; k < wordsLeft.length; k++){
     if(wordsLeft[k] <= smallest){
-      //console.log("word: " + wordsLeftWord[i] + "avg words: " + wordsLeft[k]);
       out.push(wordsLeftWord[k]);
       out1.push(wordsLeft[k]);
     }
@@ -197,7 +186,13 @@ var solveRemainingWords = function(){
   greens = newArray(oldgreens);
   grnpos = newArray(oldgrnpos);
   letters = newArray(oldletters);
-  //console.log(wordsLeftWord);
+  console.log(wordsLeftWord);
+  console.log(wordsLeft);
+  var out1Avg = new Array();
+  for(var l = 0; l < out1.length; l++){
+    out1Avg.push(out1[l]/wordList.length);
+  }
+  document.getElementById("p1").innerHTML = out + " avg words left: " + out1Avg;
   return {out, out1};
 }
 
@@ -311,33 +306,6 @@ function sort(word, result){
 }
 
 function cleanList(word){
-  // var grays;
-  // var yellows;
-  // var yelpos;
-  // var greens;
-  // var grnpos;
-  // grays = grays;
-  // yellows = yellows;
-  // yelpos = yelpos;
-  // greens = greens;
-  // grnpos = grnpos;
-  // if(test == true){
-  //   grays = grays;
-  //   yellows = yellows;
-  //   yelpos = yelpos;
-  //   greens = greens;
-  //   grnpos = grnpos;
-  // }
-  // else if(wordList.length <= 25){
-  //   grays = grays2;
-  //   yellows = yellows2;
-  //   yelpos = yelpos2;
-  //   greens = greens2;
-  //   grnpos = grnpos2;
-  // }
-  // else{
-
-  // }
   //Grays
   for(var i = 0; i < grays.length; i++){
     if(word.includes(grays[i])){
@@ -408,6 +376,14 @@ function newArray(array){
   var out = new Array();
   for(var i = 0; i < array.length; i++){
     out.push(array[i]);
+  }
+  return out;
+}
+
+function newNestArray(array){
+  var out = new Array();
+  for(var i = 0; i < array.length; i++){
+    out.push(newArray(array[i]));
   }
   return out;
 }
