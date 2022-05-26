@@ -116,6 +116,79 @@ var extraSolve = function(){
   return bestGuessWords;
 }
 
+var solveRemainingWordsAll = function(){
+  //Sort changes example which changes random bc they are equal which changes grays bc they are equal;
+  const oldgrays = newArray(grays);
+  const oldyellows = newArray(yellows);
+  const oldyelpos = newNestArray(yelpos);
+  const oldgreens = newArray(greens);
+  const oldgrnpos = newArray(grnpos);
+  const oldletters = newArray(letters);
+  const oldwordlist = newArray(wordList);
+  var wordsLeft = new Array();
+  var wordsLeftWord = new Array();
+  //console.log(wordList);
+  for(var i = 0; i < testList.length; i++){
+    wordsLeft.push(0);
+    wordsLeftWord.push(testList[i]);
+  }
+  for(var i = 0; i < wordList.length; i++){
+    var answer = wordList[i];
+    for(var j = 0; j < testList.length; j++){
+      //console.log(wordList);
+      wordList = newArray(oldwordlist);
+      var wordList2 = new Array();
+      grays = newArray(oldgrays);
+      yellows = newArray(oldyellows);
+      yelpos = newNestArray(oldyelpos);
+      greens = newArray(oldgreens);
+      grnpos = newArray(oldgrnpos);
+      letters = newArray(oldletters);
+      var guess = testList[j];
+      //console.log(guess, answer);
+      //console.log(checkWord(guess, answer));
+      //console.log(grays, yellows, greens);
+      sort(guess, checkWord(guess, answer));
+      wordList2 = newArray(wordList.filter(cleanList));
+      //console.log(i*j);
+      //console.log(wordList);
+      //console.log(wordList[j]);
+      //console.log(wordList2.length);
+      if(wordList2.length == 0){
+      }
+      wordsLeft[j] = (wordsLeft[j] + wordList2.length);
+    }
+  }
+  var smallest = 100;
+  for(var i = 0; i < wordsLeft.length; i++){
+    if(smallest > wordsLeft[i]){
+      smallest = wordsLeft[i];
+    }
+  }
+  var out = new Array();
+  var out1 = new Array();
+  for(var k = 0; k < wordsLeft.length; k++){
+    if(wordsLeft[k] <= smallest){
+      out.push(wordsLeftWord[k]);
+      out1.push(wordsLeft[k]);
+    }
+  }
+  //console.log(out);
+  grays = newArray(oldgrays);
+  yellows = newArray(oldyellows);
+  yelpos = newArray(oldyelpos);
+  greens = newArray(oldgreens);
+  grnpos = newArray(oldgrnpos);
+  letters = newArray(oldletters);
+  //console.log(wordsLeftWord);
+  //console.log(wordsLeft);
+  var out1Avg = new Array();
+  for(var l = 0; l < out1.length; l++){
+    out1Avg.push(out1[l]/wordList.length);
+  }
+  document.getElementById("p1").innerHTML = out + " avg words left: " + out1Avg;
+  return {out, out1};
+}
 var solveRemainingWords = function(){
   //Sort changes example which changes random bc they are equal which changes grays bc they are equal;
   const oldgrays = newArray(grays);
@@ -186,6 +259,7 @@ var solveRemainingWords = function(){
   for(var l = 0; l < out1.length; l++){
     out1Avg.push(out1[l]/wordList.length);
   }
+
   document.getElementById("p1").innerHTML = out + " avg words left: " + out1Avg;
   return {out, out1};
 }
@@ -427,7 +501,12 @@ testButton.onclick = function() {
       }
       if(guess == answer){break;}
       if(wordList.length <= 25){
-        guess = solveRemainingWords().out[0];
+        if(i == 1){
+          guess = solveRemainingWordsAll().out[0];
+        }
+        else{
+          guess = solveRemainingWords().out[0];
+        }
       }
       else{guess = solveWord(wordList)[0];}
     }
